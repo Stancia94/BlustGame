@@ -4,6 +4,7 @@ import { EventBus } from "./EventBus";
 import { GridConfig } from "./GridConfig";
 import MatchFinder from "./MatchFinder";
 import BlockFactory from "./BlockFactory";
+import ExtraBlockHandler from "./ExtraBlockHandler";
 
 const { Vec3 } = cc;
 const { ccclass, property } = cc._decorator;
@@ -18,6 +19,7 @@ export default class Board extends cc.Component {
     private board: BoardType[][];
     private matchFinder: MatchFinder;
     private blockFactory: BlockFactory;
+    private extraBlockHandler: ExtraBlockHandler;
 
     protected onLoad(): void {
         EventBus.on('block-clicked', this.onBlockClicked, this);
@@ -27,9 +29,8 @@ export default class Board extends cc.Component {
         this.board = new Array(this.height).fill(0).map(() => new Array(this.width).fill(null));
         this.matchFinder = new MatchFinder(this.board);
         this.blockFactory = new BlockFactory(this.blockPrefab, this.extraBlockPrefab, this.node);
+        this.extraBlockHandler = new ExtraBlockHandler(this.board);
         this.fill();
-        console.log(this.board)
-        console.log(this.board[0])
     }
     private fill(): void {
         for (let x = 0; x < this.width; x++) {
@@ -88,41 +89,27 @@ export default class Board extends cc.Component {
             if (sameBlocks.length >= 2) {
                 EventBus.emit('step');
                 if (sameBlocks.length >= 5) {
-                    this.deleteBlock(data.row, data.col);
-                    const extraBlock = this.blockFactory.createExtraBlock(data.row, data.col, getRandomExtraBlockKey());
-                    this.setBlock(data.row, data.col, extraBlock);
-                    extraBlock.node.setPosition(new Vec3(
-                        GridConfig.startXPosition + GridConfig.width * data.col,
-                        GridConfig.startYPosition - GridConfig.height * data.row,
-                        0))
-                    sameBlocks = sameBlocks.filter(
-                        (block) => (!(block.getRow() === data.row && block.getCol() === data.col))
-                    )
+                    this.upgradeToExtraBlock(data.row, data.col, sameBlocks);
                 }
                 this.destroyGroup(sameBlocks);
             }
         } else if (isExtraBlockKey(data.blockType)) {
-            let blockForDestroy: BoardType[] = [];
-            if (data.blockType == 'rockets_horizontal') {
-                blockForDestroy = this.board[data.row];
-            } else if (data.blockType == 'rockets_vertical') {
-                for (let y = 0; y < this.height; y++) {
-                    blockForDestroy.push(this.board[y][data.col]);
-                }
-            } else if (data.blockType == 'bomb') {
-                for (let row = data.row - 1; row <= data.row + 1; row++) {
-                    for (let col = data.col - 1; col <= data.col + 1; col++) {
-                        if (row >= 0 && row < this.board.length &&
-                            col >= 0 && col < this.board[row].length) {
-                            blockForDestroy.push(this.board[row][col]);
-                        }
-                    }
-                }
-            } else if (data.blockType = 'bomb_max') {
-                blockForDestroy = [].concat(...this.board);
-            }
+            const blockForDestroy = this.extraBlockHandler.handle(data);
             this.destroyGroup(blockForDestroy);
         }
+    }
+    private upgradeToExtraBlock(row: number, col: number, blocksForDestroy: BoardType[]) {
+        this.deleteBlock(row, col);
+        const extraBlock = this.blockFactory.createExtraBlock(row, col, getRandomExtraBlockKey());
+        this.setBlock(row, col, extraBlock);
+        extraBlock.node.setPosition(new Vec3(
+            GridConfig.startXPosition + GridConfig.width * col,
+            GridConfig.startYPosition - GridConfig.height * row,
+            0))
+        const index = blocksForDestroy.findIndex(
+            (block) => block.getRow() === row && block.getCol() === col
+        );
+        if (index >= 0) blocksForDestroy.splice(index, 1);
     }
     private deleteBlock(row: number, col: number): void {
         const block = this.board[row][col];
