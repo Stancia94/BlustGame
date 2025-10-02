@@ -44,8 +44,8 @@ export default class ScoreManager extends cc.Component {
     private isWin(): void {
         if (this.currentScore > this.scoreAmount) {
             EventBus.emit('gameEnd', true);
-        } else if (this.stepAmount < 0) {
-            EventBus.emit('gameEnd', true);
+        } else if (this.stepAmount === 0) {
+            EventBus.emit('gameEnd', false);
         }
     }
     private updateView(): void {

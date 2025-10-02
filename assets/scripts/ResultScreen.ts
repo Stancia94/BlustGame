@@ -1,12 +1,11 @@
-const { ccclass, property } = cc._decorator;
-
+const { ccclass } = cc._decorator;
 @ccclass
 export default class ResultScreen extends cc.Component {
-    onRestart() {
+    public onRestart(): void {
         cc.director.resume();
         cc.director.loadScene("Game");
     }
-    onMainMenu() {
+    public onMainMenu(): void {
         cc.director.resume();
         cc.director.loadScene("Start");
     }

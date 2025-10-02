@@ -1,21 +1,22 @@
 import Block from "./Block";
+import { BlockKey, BoardType, BlockClickEvent } from "./Types";
+import { getRandomBlockKey, getRandomExtraBlockKey } from "./Utils";
 import { EventBus } from "./EventBus";
+import ExtraBlock from "./ExrtaBlock";
 import { GridConfig } from "./GridConfig";
 
 const { Vec3 } = cc;
 const { ccclass, property } = cc._decorator;
-type BlockClickEvent = {
-    row: number;
-    col: number;
-    colorId: number;
-}
+
 @ccclass
 export default class Board extends cc.Component {
     @property(cc.Prefab)
     blockPrefab: cc.Prefab = null;
+    @property(cc.Prefab)
+    extraBlockPrefab: cc.Prefab = null;
     private width: number = 9;
     private height: number = 9;
-    private board: Block[][] = null;
+    private board: BoardType[][] = null;
     onLoad() {
         EventBus.on('block-clicked', this.onBlockClicked, this);
     }
@@ -27,10 +28,10 @@ export default class Board extends cc.Component {
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 if (this.board[y][x] === null) {
-                    const colorNumber = Math.floor(Math.random() * 5);
+                    const blockType = getRandomBlockKey();
                     const block = cc.instantiate(this.blockPrefab);
                     const blockComp = block.getComponent(Block);
-                    blockComp.init(y, x, colorNumber);
+                    blockComp.init(y, x, blockType);
                     this.board[y][x] = blockComp;
 
                     this.node.addChild(block);
@@ -81,27 +82,48 @@ export default class Board extends cc.Component {
         this.fill();
     }
     onBlockClicked(data: BlockClickEvent) {
-        const sameBlocks: Block[] = [];
-        const visited = new Set<string>();
-        this.findMatch(data.row, data.col, data.colorId, sameBlocks, visited);
+        let sameBlocks: Block[] = [];
+        this.findMatch(data.row, data.col, data.blockType, sameBlocks);
         if (sameBlocks.length >= 2) {
             EventBus.emit('step');
+            if (sameBlocks.length >= 5) {
+                const previosBlock = this.board[data.row][data.col];
+                previosBlock.destroyYourself();
+                this.board[data.row][data.col] = null;
+                const extraBlock = cc.instantiate(this.extraBlockPrefab);
+                const extraBlockComp = extraBlock.getComponent(ExtraBlock);
+                extraBlockComp.init(data.row, data.col, getRandomExtraBlockKey());
+                this.board[data.row][data.col] = extraBlockComp;
+                this.node.addChild(extraBlock);
+                const targetPos = new Vec3(
+                    GridConfig.startXPosition + GridConfig.width * data.col,
+                    GridConfig.startYPosition - GridConfig.height * data.row,
+                    0);
+                extraBlock.setPosition(targetPos)
+                sameBlocks = sameBlocks.filter((block) => (!(block.getRow() === data.row && block.getCol() === data.col)))
+            }
             this.destroyGroup(sameBlocks);
         }
     }
-    findMatch(row: number, col: number, colorId: number, sameBlocks: Block[], visited: Set<string>) {
-        if (row < 0 || col < 0 || row >= this.board.length || col >= this.board[0].length) return;
-        const block = this.board[row][col];
-        if (!block) return;
-        const key = row + '_' + col;
-        if (visited.has(key)) return;
-        visited.add(key);
-        if (block.getColorId() !== colorId) return;
-        sameBlocks.push(block);
-        this.findMatch(row + 1, col, colorId, sameBlocks, visited);
-        this.findMatch(row - 1, col, colorId, sameBlocks, visited);
-        this.findMatch(row, col + 1, colorId, sameBlocks, visited);
-        this.findMatch(row, col - 1, colorId, sameBlocks, visited);
+
+    findMatch(row: number, col: number, blockType: BlockKey, sameBlocks: BoardType[]) {
+        const visited = new Set<string>();
+        const dfs = (row: number, col: number) => {
+            if (row < 0 || col < 0 || row >= this.board.length || col >= this.board[0].length) return;
+            const block = this.board[row][col];
+            if (!block) return;
+            if (block instanceof ExtraBlock) return;
+            const key = row + '_' + col;
+            if (visited.has(key)) return;
+            visited.add(key);
+            if (block.getType() !== blockType) return;
+            sameBlocks.push(block);
+            dfs(row + 1, col);
+            dfs(row - 1, col);
+            dfs(row, col + 1);
+            dfs(row, col - 1);
+        };
+        dfs(row, col);
     }
     protected onDestroy(): void {
         EventBus.off('block-clicked', this.onBlockClicked, this);

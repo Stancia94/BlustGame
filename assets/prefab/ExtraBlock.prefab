@@ -55,8 +55,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -1178.991,
-        -160.348,
+        515.305,
+        1891.906,
         0,
         0,
         0,
@@ -123,7 +123,7 @@
       "ctor": "Float64Array",
       "array": [
         0,
-        2.985,
+        0,
         0,
         0,
         0,
@@ -163,7 +163,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "cd49532a-ebe8-486b-b0a5-a7734cb328be"
+      "__uuid__": "15dca797-a3e2-4fbd-9d8f-17daf4a03cf5"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -388,7 +388,7 @@
     "sync": false
   },
   {
-    "__type__": "5759aozpf9DHrKg04Tf4B1h",
+    "__type__": "c3e44F1XqVA/rIUI4wg3QZK",
     "_name": "",
     "_objFlags": 0,
     "node": {

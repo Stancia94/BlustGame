@@ -19,9 +19,6 @@ export default class GameManager extends cc.Component {
         screen.parent = cc.find("Canvas");
         screen.setPosition(0, 0, 0);
     }
-    private restartGame(): void {
-
-    }
     protected onDestroy(): void {
         EventBus.off('gameEnd', this.onGameEnd, this);
     }
