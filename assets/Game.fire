@@ -623,8 +623,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -1060.312,
-        281.725,
+        -1156.157,
+        368.295,
         0,
         0,
         0,
@@ -1892,8 +1892,8 @@
     },
     "minSteps": 10,
     "maxSteps": 40,
-    "minTargetScore": 400,
-    "maxTargetScore": 1000,
+    "minTargetScore": 10000,
+    "maxTargetScore": 10000,
     "_id": "8eBPVHnAhFiJcEz74O1Lo9"
   },
   {

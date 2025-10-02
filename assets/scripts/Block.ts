@@ -16,9 +16,7 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
     protected onLoad(): void {
         this.blockSpriteNode.on(cc.Node.EventType.TOUCH_START, this.onTouch, this);
     }
-    start() {
-
-    }
+    start() { }
     public getRow(): number {
         return this.row;
     }
@@ -58,6 +56,10 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
         cc.tween(this.node)
             .to(time, { position: targetPos }, { easing: "sineOut" })
             .start();
+    }
+    public fallAnimation(startPos: cc.Vec3, targetPos: cc.Vec3) {
+        this.node.setPosition(startPos);
+        this.fallTo(targetPos, 0.5);
     }
     private onTouch(): void {
         EventBus.emit('block-clicked', { blockType: this.blockType, row: this.row, col: this.col });

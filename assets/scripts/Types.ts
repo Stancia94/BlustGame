@@ -22,6 +22,15 @@ export type ExtraBlockValue = typeof extraBlock[ExtraBlockKey];
 export type BlockClickEvent = {
     row: number;
     col: number;
-    blockType: BlockKey;
+    blockType: BlockType;
 }
+export type BlockType = BlockKey | ExtraBlockKey;
 export type BoardType = Block<BlockKey> | Block<ExtraBlockKey>;
+
+export function isBlockKey(type: BlockType): type is BlockKey {
+    return type in blockColor;
+}
+
+export function isExtraBlockKey(type: BlockType): type is ExtraBlockKey {
+    return type in extraBlock;
+}
