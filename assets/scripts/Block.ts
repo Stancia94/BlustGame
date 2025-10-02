@@ -1,33 +1,28 @@
-// Learn TypeScript:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/typescript.html
-// Learn Attribute:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/reference/attributes.html
-// Learn life-cycle callbacks:
-//  - https://docs.cocos.com/creator/2.4/manual/en/scripting/life-cycle-callbacks.html
+import { blockColor } from "./BlockColorMatch";
+import { EventBus } from "./EventBus";
 
 const { ccclass, property } = cc._decorator;
 
-const blockColor: string[] = [
-    'block_blue',
-    'block_green',
-    'block_purpure',
-    'block_red',
-    'block_yellow'
-]
 
 @ccclass
 export default class Block extends cc.Component {
-    // LIFE-CYCLE CALLBACKS:
-
-    // onLoad () {}
     @property(cc.SpriteAtlas)
     atlas: cc.SpriteAtlas = null;
+    public row: number = 0;
+    public col: number = 0;
     public colorId: number = 0;
+    protected onLoad(): void {
+        this.node.getChildByName('block_sprite').on(cc.Node.EventType.TOUCH_START, this.onTouch, this);
+    }
     start() {
         const spriteFrame = this.atlas.getSpriteFrame(blockColor[this.colorId]);
-        const sprite = this.node.getComponent(cc.Sprite);
+        const sprite = this.node.getChildByName('block_sprite').getComponent(cc.Sprite);
         sprite.spriteFrame = spriteFrame;
     }
+    fallTo() {
 
-    // update (dt) {}
+    }
+    onTouch() {
+        EventBus.emit('block-clicked', { colorId: this.colorId, row: this.row, col: this.col });
+    }
 }
