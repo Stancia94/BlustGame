@@ -64,4 +64,7 @@ export default class Block extends cc.Component {
     private onTouch(): void {
         EventBus.emit('block-clicked', { colorId: this.colorId, row: this.row, col: this.col });
     }
+    protected onDestroy(): void {
+        this.blockSpriteNode.off(cc.Node.EventType.TOUCH_START, this.onTouch, this);
+    }
 }
