@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets\\scripts\\EventBus.ts"],"names":[],"mappings":";;;;;;;AAAa,QAAA,QAAQ,GAAG,IAAI,EAAE,CAAC,WAAW,EAAE,CAAC","file":"","sourceRoot":"/","sourcesContent":["export const EventBus = new cc.EventTarget();\n"]}

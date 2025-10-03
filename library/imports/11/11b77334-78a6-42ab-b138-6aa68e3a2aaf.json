@@ -1,0 +1,28 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "background_score_bar",
+    "texture": "9cf36318-3ec1-4b2e-80e8-3ee1b74a5e30",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      872,
+      321
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      872,
+      321
+    ],
+    "capInsets": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

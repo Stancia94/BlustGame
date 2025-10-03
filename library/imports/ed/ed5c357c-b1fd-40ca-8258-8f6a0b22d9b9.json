@@ -1,0 +1,35 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "blast_tileset.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "block_blue": {
+      "__uuid__": "cd49532a-ebe8-486b-b0a5-a7734cb328be"
+    },
+    "block_bomb": {
+      "__uuid__": "15dca797-a3e2-4fbd-9d8f-17daf4a03cf5"
+    },
+    "block_bomb_max": {
+      "__uuid__": "6d78e50c-6a19-4c3f-a44a-b6c63d4f2301"
+    },
+    "block_green": {
+      "__uuid__": "c122b4f7-bf5e-4255-a576-1b9cb12ad0c0"
+    },
+    "block_purpure": {
+      "__uuid__": "5265dac0-0538-44d3-8c1a-e2cbd1ac28e7"
+    },
+    "block_rakets": {
+      "__uuid__": "2a380c63-d14e-4b24-9b62-ae601c32fa73"
+    },
+    "block_red": {
+      "__uuid__": "838b3c1e-c8dc-4009-a259-fcff224a9c96"
+    },
+    "block_rockets_horisontal": {
+      "__uuid__": "e1934235-7d23-47b3-830d-157e93f8b521"
+    },
+    "block_yellow": {
+      "__uuid__": "8dc011c9-201a-48bb-b330-17c441dff2ab"
+    }
+  }
+}
