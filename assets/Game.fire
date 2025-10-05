@@ -1481,8 +1481,8 @@
     },
     "minSteps": 10,
     "maxSteps": 40,
-    "minTargetScore": 10000,
-    "maxTargetScore": 10000,
+    "minTargetScore": 500,
+    "maxTargetScore": 1500,
     "_id": "8eBPVHnAhFiJcEz74O1Lo9"
   },
   {

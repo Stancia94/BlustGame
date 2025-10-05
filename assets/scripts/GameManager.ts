@@ -13,7 +13,6 @@ export default class GameManager extends cc.Component {
     }
     start() { }
     private onGameEnd(isWin: boolean): void {
-        cc.director.pause();
         const prefabScreen = isWin ? this.victoryScreenPrefab : this.lossScreeenPrefab;
         const screen = cc.instantiate(prefabScreen);
         screen.parent = cc.find("Canvas");

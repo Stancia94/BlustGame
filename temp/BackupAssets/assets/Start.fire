@@ -136,7 +136,9 @@
       "__id__": 2
     },
     "_enabled": true,
-    "backgroundMusicClip": null,
+    "backgroundMusicClip": {
+      "__uuid__": "a2a41311-b3ad-4cb7-b0f8-40faec5db5de"
+    },
     "_id": "c9lJC49bpJ/KGqFJVMRmRG"
   },
   {
@@ -154,7 +156,7 @@
     "_mute": false,
     "_loop": false,
     "_firstlyEnabled": true,
-    "playOnLoad": true,
+    "playOnLoad": false,
     "preload": true,
     "_id": "97Eh1gGr9JkZR6Tu1qgXM1"
   },

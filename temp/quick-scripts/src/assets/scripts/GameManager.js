@@ -39,7 +39,6 @@ var GameManager = /** @class */ (function (_super) {
     };
     GameManager.prototype.start = function () { };
     GameManager.prototype.onGameEnd = function (isWin) {
-        cc.director.pause();
         var prefabScreen = isWin ? this.victoryScreenPrefab : this.lossScreeenPrefab;
         var screen = cc.instantiate(prefabScreen);
         screen.parent = cc.find("Canvas");
