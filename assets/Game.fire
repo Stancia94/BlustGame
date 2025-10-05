@@ -1479,10 +1479,10 @@
     "scoreNode": {
       "__id__": 21
     },
-    "minSteps": 10,
+    "minSteps": 40,
     "maxSteps": 40,
     "minTargetScore": 500,
-    "maxTargetScore": 1500,
+    "maxTargetScore": 10000,
     "_id": "8eBPVHnAhFiJcEz74O1Lo9"
   },
   {

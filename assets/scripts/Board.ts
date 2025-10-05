@@ -5,6 +5,7 @@ import { GridConfig } from "./GridConfig";
 import MatchFinder from "./MatchFinder";
 import BlockFactory from "./BlockFactory";
 import ExtraBlockHandler from "./ExtraBlockHandler";
+import ExtraBlock from "./ExrtaBlock";
 
 const { Vec3 } = cc;
 const { ccclass, property } = cc._decorator;
@@ -100,7 +101,12 @@ export default class Board extends cc.Component {
     }
     private upgradeToExtraBlock(row: number, col: number, blocksForDestroy: BoardType[]) {
         this.deleteBlock(row, col);
-        const extraBlock = this.blockFactory.createExtraBlock(row, col, getRandomExtraBlockKey());
+        let extraBlock: ExtraBlock = null;
+        if (blocksForDestroy.length >= 8) {
+            extraBlock = this.blockFactory.createExtraBlock(row, col, 'bomb_max');
+        } else {
+            extraBlock = this.blockFactory.createExtraBlock(row, col, getRandomExtraBlockKey(['bomb_max']));
+        }
         this.setBlock(row, col, extraBlock);
         extraBlock.node.setPosition(new Vec3(
             GridConfig.startXPosition + GridConfig.width * col,

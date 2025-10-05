@@ -1,4 +1,4 @@
-import { BlockClickEvent, BoardType } from "./Types";
+import { BlockClickEvent, BoardType, isExtraBlockKey } from "./Types";
 
 export default class ExtraBlockHandler {
     constructor(private board: BoardType[][]) { }
@@ -22,17 +22,17 @@ export default class ExtraBlockHandler {
         return;
     }
     private getHorizontalLine(row: number): BoardType[] {
-        return this.board[row]
+        return (this.board[row]);
     }
     private getVerticalLine(col: number): BoardType[] {
-        const blockForDestroy = [];
+        const blockForDestroy: BoardType[] = [];
         for (let y = 0; y < this.board[0].length; y++) {
             blockForDestroy.push(this.board[y][col]);
         }
         return blockForDestroy;
     }
     private getBombArea(clickedRow: number, clickedCol: number): BoardType[] {
-        const blockForDestroy = [];
+        const blockForDestroy: BoardType[] = [];
         for (let row = clickedRow - 1; row <= clickedRow + 1; row++) {
             for (let col = clickedCol - 1; col <= clickedCol + 1; col++) {
                 if (row >= 0 && row < this.board.length &&

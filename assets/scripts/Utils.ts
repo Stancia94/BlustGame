@@ -1,12 +1,24 @@
 import { BlockKey, ExtraBlockKey, extraBlock, blockColor } from "./Types";
 
-export function getRandomBlockKey(): BlockKey {
+export function getRandomBlockKey(exclude: BlockKey[] = []): BlockKey {
     const keys = Object.keys(blockColor) as BlockKey[];
-    const randomIndex = Math.floor(Math.random() * keys.length);
-    return keys[randomIndex];
+    const filteredKeys = keys.filter(key => !exclude.includes(key));
+
+    if (filteredKeys.length === 0) {
+        throw new Error("Нет доступных BlockKey после исключений");
+    }
+
+    const randomIndex = Math.floor(Math.random() * filteredKeys.length);
+    return filteredKeys[randomIndex];
 }
-export function getRandomExtraBlockKey(): ExtraBlockKey {
+export function getRandomExtraBlockKey(exclude: ExtraBlockKey[] = []): ExtraBlockKey {
     const keys = Object.keys(extraBlock) as ExtraBlockKey[];
-    const randomIndex = Math.floor(Math.random() * keys.length);
-    return keys[randomIndex];
+    const filteredKeys = keys.filter(key => !exclude.includes(key));
+
+    if (filteredKeys.length === 0) {
+        throw new Error("Нет доступных ExtraBlockKey после исключений");
+    }
+
+    const randomIndex = Math.floor(Math.random() * filteredKeys.length);
+    return filteredKeys[randomIndex];
 }

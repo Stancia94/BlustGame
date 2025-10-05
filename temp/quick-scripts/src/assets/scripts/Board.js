@@ -114,7 +114,13 @@ var Board = /** @class */ (function (_super) {
     };
     Board.prototype.upgradeToExtraBlock = function (row, col, blocksForDestroy) {
         this.deleteBlock(row, col);
-        var extraBlock = this.blockFactory.createExtraBlock(row, col, Utils_1.getRandomExtraBlockKey());
+        var extraBlock = null;
+        if (blocksForDestroy.length >= 8) {
+            extraBlock = this.blockFactory.createExtraBlock(row, col, 'bomb_max');
+        }
+        else {
+            extraBlock = this.blockFactory.createExtraBlock(row, col, Utils_1.getRandomExtraBlockKey(['bomb_max']));
+        }
         this.setBlock(row, col, extraBlock);
         extraBlock.node.setPosition(new Vec3(GridConfig_1.GridConfig.startXPosition + GridConfig_1.GridConfig.width * col, GridConfig_1.GridConfig.startYPosition - GridConfig_1.GridConfig.height * row, 0));
         var index = blocksForDestroy.findIndex(function (block) { return block.getRow() === row && block.getCol() === col; });
