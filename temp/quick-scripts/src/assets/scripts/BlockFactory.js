@@ -12,17 +12,17 @@ var BlockFactory = /** @class */ (function () {
         this.extraBlockPrefab = extraBlockPrefab;
         this.parent = parent;
     }
-    BlockFactory.prototype.createBlock = function (row, col, blockType) {
+    BlockFactory.prototype.createBlock = function (row, col, blockType, size) {
         var block = cc.instantiate(this.blockPrefab);
         var blockComp = block.getComponent(Block_1.default);
-        blockComp.init(row, col, blockType);
+        blockComp.init(row, col, blockType, size);
         this.parent.addChild(block);
         return blockComp;
     };
-    BlockFactory.prototype.createExtraBlock = function (row, col, blockType) {
+    BlockFactory.prototype.createExtraBlock = function (row, col, blockType, size) {
         var block = cc.instantiate(this.extraBlockPrefab);
         var blockComp = block.getComponent(ExrtaBlock_1.default);
-        blockComp.init(row, col, blockType);
+        blockComp.init(row, col, blockType, size);
         this.parent.addChild(block);
         return blockComp;
     };

@@ -19,7 +19,7 @@ exports.GridConfig = void 0;
 exports.GridConfig = {
     width: 100,
     height: 112,
-    startXPosition: -400,
+    startXPosition: -410,
     startYPosition: 440,
     behindScreen: 600
 };
@@ -35,4 +35,4 @@ cc._RF.pop();
                         });
                     }
                 })();
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFzc2V0c1xcc2NyaXB0c1xcR3JpZENvbmZpZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBYSxRQUFBLFVBQVUsR0FBRztJQUN0QixLQUFLLEVBQUUsR0FBRztJQUNWLE1BQU0sRUFBRSxHQUFHO0lBQ1gsY0FBYyxFQUFFLENBQUMsR0FBRztJQUNwQixjQUFjLEVBQUUsR0FBRztJQUNuQixZQUFZLEVBQUUsR0FBRztDQUNwQixDQUFBIiwiZmlsZSI6IiIsInNvdXJjZVJvb3QiOiIvIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IEdyaWRDb25maWcgPSB7XHJcbiAgICB3aWR0aDogMTAwLFxyXG4gICAgaGVpZ2h0OiAxMTIsXHJcbiAgICBzdGFydFhQb3NpdGlvbjogLTQwMCxcclxuICAgIHN0YXJ0WVBvc2l0aW9uOiA0NDAsXHJcbiAgICBiZWhpbmRTY3JlZW46IDYwMFxyXG59Il19
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFzc2V0c1xcc2NyaXB0c1xcR3JpZENvbmZpZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBYSxRQUFBLFVBQVUsR0FBRztJQUN0QixLQUFLLEVBQUUsR0FBRztJQUNWLE1BQU0sRUFBRSxHQUFHO0lBQ1gsY0FBYyxFQUFFLENBQUMsR0FBRztJQUNwQixjQUFjLEVBQUUsR0FBRztJQUNuQixZQUFZLEVBQUUsR0FBRztDQUNwQixDQUFBIiwiZmlsZSI6IiIsInNvdXJjZVJvb3QiOiIvIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IEdyaWRDb25maWcgPSB7XHJcbiAgICB3aWR0aDogMTAwLFxyXG4gICAgaGVpZ2h0OiAxMTIsXHJcbiAgICBzdGFydFhQb3NpdGlvbjogLTQxMCxcclxuICAgIHN0YXJ0WVBvc2l0aW9uOiA0NDAsXHJcbiAgICBiZWhpbmRTY3JlZW46IDYwMFxyXG59Il19

@@ -1,5 +1,6 @@
 import { blockColor, BlockKey } from "./Types";
 import { EventBus } from "./EventBus";
+import { GridConfig } from "./GridConfig";
 
 const { ccclass, property } = cc._decorator;
 @ccclass
@@ -13,8 +14,11 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
     protected row: number = 0;
     protected col: number = 0;
     protected blockType: T = 'blue' as T;
+    protected width: number = GridConfig.width;
+    protected height: number = GridConfig.height;
     protected onLoad(): void {
         this.blockSpriteNode.on(cc.Node.EventType.TOUCH_START, this.onTouch, this);
+
     }
     start() { }
     public getRow(): number {
@@ -30,11 +34,17 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
         this.row = row;
         this.col = col;
     }
-    public init(row: number, col: number, blockType: T): void {
+    public init(row: number, col: number, blockType: T, size?: cc.Vec2): void {
         this.row = row;
         this.col = col;
         this.blockType = blockType;
+        this.setSize(size);
         this.updateVisual();
+    }
+    public setSize(size: cc.Vec2) {
+        const scaleX = size.x / GridConfig.width;
+        const scaleY = size.y / GridConfig.height;
+        this.node.setScale(scaleX, scaleY);
     }
     protected updateVisual(): void {
         const key = this.blockType as BlockKey
@@ -42,7 +52,9 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
         const sprite = this.blockSpriteNode.getComponent(cc.Sprite);
         sprite.spriteFrame = spriteFrame;
     }
+    protected updateScale(): void {
 
+    }
     public destroyYourself(): void {
         const anim = this.blockSpriteNode.getComponent(cc.Animation);
         const particle = this.smokeNode.getComponent(cc.ParticleSystem);

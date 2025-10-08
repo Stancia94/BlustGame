@@ -37,10 +37,9 @@ var ScoreManager = /** @class */ (function (_super) {
         _this.scoreNode = null;
         _this.minSteps = 10;
         _this.maxSteps = 40;
-        _this.minTargetScore = 300;
-        _this.maxTargetScore = 100;
+        _this.minTargetScore = 100;
+        _this.maxTargetScore = 1000;
         return _this;
-        // update (dt) {}
     }
     ScoreManager.prototype.onLoad = function () {
         EventBus_1.EventBus.on('blocks-destroy', this.onBlockDestroy, this);

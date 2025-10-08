@@ -16,9 +16,9 @@ export default class ScoreManager extends cc.Component {
     @property
     maxSteps: number = 40;
     @property
-    minTargetScore: number = 300;
+    minTargetScore: number = 100;
     @property
-    maxTargetScore: number = 100;
+    maxTargetScore: number = 1000;
     protected onLoad(): void {
         EventBus.on('blocks-destroy', this.onBlockDestroy, this);
         EventBus.on('step', this.onStep, this);
@@ -56,5 +56,4 @@ export default class ScoreManager extends cc.Component {
         EventBus.off('blocks-destroy', this.onBlockDestroy, this);
         EventBus.off('step', this.onStep, this);
     }
-    // update (dt) {}
 }

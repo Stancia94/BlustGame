@@ -36,8 +36,6 @@ var ExtraBlock = /** @class */ (function (_super) {
         _this.blockType = 'bomb';
         return _this;
     }
-    ExtraBlock.prototype.start = function () {
-    };
     ExtraBlock.prototype.updateVisual = function () {
         var spriteFrame = this.atlas.getSpriteFrame(Types_1.extraBlock[this.blockType]);
         var sprite = this.blockSpriteNode.getComponent(cc.Sprite);

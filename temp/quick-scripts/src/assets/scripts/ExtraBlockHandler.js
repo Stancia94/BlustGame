@@ -3,15 +3,7 @@ cc._RF.push(module, '54521D6A49JzYHHQC4rvakF', 'ExtraBlockHandler');
 // scripts/ExtraBlockHandler.ts
 
 "use strict";
-var __spreadArrays = (this && this.__spreadArrays) || function () {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
-    for (var r = Array(s), k = 0, i = 0; i < il; i++)
-        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-            r[k] = a[j];
-    return r;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var Types_1 = require("./Types");
 var ExtraBlockHandler = /** @class */ (function () {
     function ExtraBlockHandler(board) {
         this.board = board;
@@ -36,7 +28,7 @@ var ExtraBlockHandler = /** @class */ (function () {
         return;
     };
     ExtraBlockHandler.prototype.getHorizontalLine = function (row) {
-        return this.includesExtraBlock(this.board[row]);
+        return (this.board[row]);
     };
     ExtraBlockHandler.prototype.getVerticalLine = function (col) {
         var blockForDestroy = [];
@@ -59,29 +51,6 @@ var ExtraBlockHandler = /** @class */ (function () {
     };
     ExtraBlockHandler.prototype.getAllBlocks = function () {
         return [].concat.apply([], this.board);
-    };
-    ExtraBlockHandler.prototype.includesExtraBlock = function (initialBlocks) {
-        var result = [];
-        var visited = new Set();
-        var queue = __spreadArrays(initialBlocks);
-        while (queue.length > 0) {
-            var block = queue.shift();
-            if (!block || visited.has(block))
-                continue;
-            visited.add(block);
-            result.push(block);
-            if (Types_1.isExtraBlockKey(block.getType())) {
-                var data = {
-                    blockType: block.getType(),
-                    row: block.getRow(),
-                    col: block.getCol(),
-                };
-                // вместо рекурсии — просто добавляем в очередь
-                var extraBlocks = this.handle(data);
-                queue.push.apply(queue, extraBlocks);
-            }
-        }
-        return result;
     };
     return ExtraBlockHandler;
 }());

@@ -25,6 +25,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var Types_1 = require("./Types");
 var EventBus_1 = require("./EventBus");
+var GridConfig_1 = require("./GridConfig");
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var Block = /** @class */ (function (_super) {
     __extends(Block, _super);
@@ -36,6 +37,8 @@ var Block = /** @class */ (function (_super) {
         _this.row = 0;
         _this.col = 0;
         _this.blockType = 'blue';
+        _this.width = GridConfig_1.GridConfig.width;
+        _this.height = GridConfig_1.GridConfig.height;
         return _this;
     }
     Block.prototype.onLoad = function () {
@@ -55,17 +58,25 @@ var Block = /** @class */ (function (_super) {
         this.row = row;
         this.col = col;
     };
-    Block.prototype.init = function (row, col, blockType) {
+    Block.prototype.init = function (row, col, blockType, size) {
         this.row = row;
         this.col = col;
         this.blockType = blockType;
+        this.setSize(size);
         this.updateVisual();
+    };
+    Block.prototype.setSize = function (size) {
+        var scaleX = size.x / GridConfig_1.GridConfig.width;
+        var scaleY = size.y / GridConfig_1.GridConfig.height;
+        this.node.setScale(scaleX, scaleY);
     };
     Block.prototype.updateVisual = function () {
         var key = this.blockType;
         var spriteFrame = this.atlas.getSpriteFrame(Types_1.blockColor[key]);
         var sprite = this.blockSpriteNode.getComponent(cc.Sprite);
         sprite.spriteFrame = spriteFrame;
+    };
+    Block.prototype.updateScale = function () {
     };
     Block.prototype.destroyYourself = function () {
         var _this = this;

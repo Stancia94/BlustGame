@@ -11,9 +11,7 @@ export default class ExtraBlock extends Block<ExtraBlockKey> {
     @property(cc.Node)
     smokeNode: cc.Node = null;
     protected blockType: ExtraBlockKey = 'bomb';
-    start() {
 
-    }
     protected updateVisual(): void {
         const spriteFrame = this.atlas.getSpriteFrame(extraBlock[this.blockType]);
         const sprite = this.blockSpriteNode.getComponent(cc.Sprite);
