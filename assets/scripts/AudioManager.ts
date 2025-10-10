@@ -19,7 +19,17 @@ export default class AudioManager extends cc.Component {
     }
 
     start() {
-        this.playBGM(true);
+        if (!this.isBGMPlaying()) {
+            this.playBGM(true);
+        }
+    }
+
+    private isBGMPlaying(): boolean {
+        if (this.backgroundMusicId !== null) {
+            const state = cc.audioEngine.getState(this.backgroundMusicId);
+            return state === cc.audioEngine.AudioState.PLAYING;
+        }
+        return false;
     }
 
     private playBGM(loop: boolean = true) {

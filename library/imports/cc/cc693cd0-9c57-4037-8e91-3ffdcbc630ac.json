@@ -136,7 +136,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
+    "_enabled": false,
     "backgroundMusicClip": {
       "__uuid__": "a2a41311-b3ad-4cb7-b0f8-40faec5db5de"
     },
@@ -149,7 +149,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
+    "_enabled": false,
     "_clip": {
       "__uuid__": "a2a41311-b3ad-4cb7-b0f8-40faec5db5de"
     },
@@ -158,7 +158,7 @@
     "_loop": false,
     "_firstlyEnabled": true,
     "playOnLoad": false,
-    "preload": true,
+    "preload": false,
     "_id": "97Eh1gGr9JkZR6Tu1qgXM1"
   },
   {

@@ -18,7 +18,6 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
     protected height: number = GridConfig.height;
     protected onLoad(): void {
         this.blockSpriteNode.on(cc.Node.EventType.TOUCH_START, this.onTouch, this);
-
     }
     start() { }
     public getRow(): number {

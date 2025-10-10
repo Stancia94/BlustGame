@@ -42,7 +42,16 @@ var AudioManager = /** @class */ (function (_super) {
         cc.game.addPersistRootNode(this.node);
     };
     AudioManager.prototype.start = function () {
-        this.playBGM(true);
+        if (!this.isBGMPlaying()) {
+            this.playBGM(true);
+        }
+    };
+    AudioManager.prototype.isBGMPlaying = function () {
+        if (this.backgroundMusicId !== null) {
+            var state = cc.audioEngine.getState(this.backgroundMusicId);
+            return state === cc.audioEngine.AudioState.PLAYING;
+        }
+        return false;
     };
     AudioManager.prototype.playBGM = function (loop) {
         if (loop === void 0) { loop = true; }

@@ -66,8 +66,8 @@ var Board = /** @class */ (function (_super) {
                 if (this.board[y][x] === null) {
                     var block = this.blockFactory.createBlock(y, x, Utils_1.getRandomBlockKey(), blockSize);
                     this.setBlock(y, x, block);
-                    var startPos = new Vec3(-(this.node.width / 2 - blockSize.x) + blockSize.x * x, GridConfig_1.GridConfig.behindScreen);
-                    var targetPos = new Vec3(-(this.node.width / 2 - blockSize.x) + blockSize.x * x, (this.node.height / 2 - blockSize.y) - blockSize.y * y, 0);
+                    var startPos = new Vec3(-(this.node.width / 2 - GridConfig_1.GridConfig.marginX - blockSize.x / 2) + blockSize.x * x, GridConfig_1.GridConfig.behindScreen);
+                    var targetPos = this.blockSizer.getBlockPosition(y, x, blockSize);
                     block.fallAnimation(startPos, targetPos);
                 }
             }
@@ -87,7 +87,7 @@ var Board = /** @class */ (function (_super) {
                 if (newY !== y) {
                     this.board[y][x] = null;
                     this.setBlock(newY, x, block);
-                    var targetPos = new Vec3(-(this.node.width / 2 - blockSize.x) + blockSize.x * x, (this.node.height / 2 - blockSize.y) - blockSize.y * newY, 0);
+                    var targetPos = this.blockSizer.getBlockPosition(newY, x, blockSize);
                     block.fallTo(targetPos, 0.4);
                 }
             }
@@ -131,7 +131,7 @@ var Board = /** @class */ (function (_super) {
             extraBlock = this.blockFactory.createExtraBlock(row, col, Utils_1.getRandomExtraBlockKey(['bomb_max']), blockSize);
         }
         this.setBlock(row, col, extraBlock);
-        extraBlock.node.setPosition(new Vec3(-(this.node.width / 2 - blockSize.x) + blockSize.x * col, (this.node.height / 2 - blockSize.y) - blockSize.y * row, 0));
+        extraBlock.node.setPosition(this.blockSizer.getBlockPosition(row, col, blockSize));
         var index = blocksForDestroy.findIndex(function (block) { return block.getRow() === row && block.getCol() === col; });
         if (index >= 0)
             blocksForDestroy.splice(index, 1);
@@ -154,7 +154,7 @@ var Board = /** @class */ (function (_super) {
             for (var y = 0; y < this.height; y++) {
                 var block = this.board[y][x];
                 block === null || block === void 0 ? void 0 : block.setSize(blockSize);
-                var targetPos = new Vec3(-(this.node.width / 2 - blockSize.x) + blockSize.x * x, (this.node.height / 2 - blockSize.y) - blockSize.y * y, 0);
+                var targetPos = new Vec3(-(this.node.width / 2 - GridConfig_1.GridConfig.marginX - blockSize.x / 2) + blockSize.x * x, (this.node.height / 2 - GridConfig_1.GridConfig.marginX - blockSize.y / 2) - blockSize.y * y, 0);
                 block === null || block === void 0 ? void 0 : block.node.setPosition(targetPos);
             }
         }
@@ -169,6 +169,12 @@ var Board = /** @class */ (function (_super) {
     __decorate([
         property(cc.Prefab)
     ], Board.prototype, "extraBlockPrefab", void 0);
+    __decorate([
+        property
+    ], Board.prototype, "width", void 0);
+    __decorate([
+        property
+    ], Board.prototype, "height", void 0);
     Board = __decorate([
         ccclass
     ], Board);

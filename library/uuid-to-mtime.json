@@ -570,8 +570,8 @@
     "relativePath": "sprites\\bg_frame_play.png"
   },
   "b0985cf5-5132-4a3c-9f17-518aac7502ed": {
-    "asset": 1759442590904,
-    "meta": 1759478507260,
+    "asset": 1759960662833,
+    "meta": 1760022449547,
     "relativePath": "scripts"
   },
   "1031bd7b-b632-4e6a-848e-d73804edc05e": {
@@ -600,13 +600,13 @@
     "relativePath": "animation\\123.anim"
   },
   "cc693cd0-9c57-4037-8e91-3ffdcbc630ac": {
-    "asset": 1759480979793,
-    "meta": 1759480979798,
+    "asset": 1760089015562,
+    "meta": 1760089015568,
     "relativePath": "Start.fire"
   },
   "d23cd95d-460b-4a24-9515-9751f945c7fe": {
-    "asset": 1759965626800,
-    "meta": 1759965626806,
+    "asset": 1760090648260,
+    "meta": 1760090648266,
     "relativePath": "Game.fire"
   },
   "3b942820-1600-48c6-b7b7-6b8679bbd185": {
@@ -654,11 +654,6 @@
     "meta": 1759441680384,
     "relativePath": "sound\\soundGame.mp3"
   },
-  "ba6ed6e6-2c14-495b-ac42-e2ce1aab8067": {
-    "asset": 1759478627582,
-    "meta": 1759478635540,
-    "relativePath": "scripts\\AudioManager.ts"
-  },
   "78915ab6-e712-4066-90c4-2ffa2a058004": {
     "asset": 1759478633729,
     "meta": 1759478635551,
@@ -694,29 +689,39 @@
     "meta": 1759962730283,
     "relativePath": "scripts\\ExrtaBlock.ts"
   },
-  "5759aa33-a5ff-431e-b2a0-d384dfe01d61": {
-    "asset": 1759963075960,
-    "meta": 1759963167436,
-    "relativePath": "scripts\\Block.ts"
-  },
   "421e95b4-0d3a-4560-8fd0-8c1f229113f3": {
     "asset": 1759965263131,
     "meta": 1759965263302,
     "relativePath": "scripts\\LimitNodeSize.ts"
   },
+  "5759aa33-a5ff-431e-b2a0-d384dfe01d61": {
+    "asset": 1760025296034,
+    "meta": 1760034679628,
+    "relativePath": "scripts\\Block.ts"
+  },
+  "9636b84e-6957-459b-ac87-1d300085604d": {
+    "asset": 1760086948292,
+    "meta": 1760087691004,
+    "relativePath": "scripts.zip"
+  },
+  "ba6ed6e6-2c14-495b-ac42-e2ce1aab8067": {
+    "asset": 1760088888171,
+    "meta": 1760088889272,
+    "relativePath": "scripts\\AudioManager.ts"
+  },
   "d97d21ff-4659-480a-9d3a-df4975955335": {
-    "asset": 1759965792068,
-    "meta": 1759965794479,
+    "asset": 1760090541210,
+    "meta": 1760090611008,
     "relativePath": "scripts\\GridConfig.ts"
   },
   "63747414-9276-41de-a274-4615327cb470": {
-    "asset": 1759966350924,
-    "meta": 1759966352781,
+    "asset": 1760091060811,
+    "meta": 1760091061056,
     "relativePath": "scripts\\Board.ts"
   },
   "77005944-f13e-490e-91c8-06c10c94aebe": {
-    "asset": 1759966638530,
-    "meta": 1759966642160,
+    "asset": 1760091056921,
+    "meta": 1760091061076,
     "relativePath": "scripts\\BoardSizer.ts"
   }
 }

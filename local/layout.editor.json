@@ -7,7 +7,7 @@
       "windowType": "dockable",
       "x": -8,
       "y": -8,
-      "width": 1874,
+      "width": 1873,
       "height": 1096,
       "layout": {
         "type": "dock-h",
@@ -38,12 +38,12 @@
             ]
           },
           {
-            "width": 1151,
+            "width": 1041,
             "height": 978,
             "type": "dock-v",
             "children": [
               {
-                "width": 1151,
+                "width": 1041,
                 "height": 708.984375,
                 "type": "panel",
                 "active": 0,
@@ -53,7 +53,7 @@
                 ]
               },
               {
-                "width": 1151,
+                "width": 1041,
                 "height": 266,
                 "type": "panel",
                 "active": 0,
@@ -66,7 +66,7 @@
             ]
           },
           {
-            "width": 401,
+            "width": 510,
             "height": 978,
             "type": "panel",
             "active": 0,

@@ -157,7 +157,7 @@
     "_loop": false,
     "_firstlyEnabled": true,
     "playOnLoad": false,
-    "preload": true,
+    "preload": false,
     "_id": "97Eh1gGr9JkZR6Tu1qgXM1"
   },
   {

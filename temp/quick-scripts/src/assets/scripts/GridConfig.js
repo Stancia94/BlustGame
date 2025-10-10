@@ -8,9 +8,8 @@ exports.GridConfig = void 0;
 exports.GridConfig = {
     width: 100,
     height: 112,
-    startXPosition: -410,
-    startYPosition: 440,
-    behindScreen: 600
+    behindScreen: 600,
+    marginX: 40
 };
 
 cc._RF.pop();

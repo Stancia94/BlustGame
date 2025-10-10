@@ -16,7 +16,9 @@ export default class Board extends cc.Component {
     blockPrefab: cc.Prefab = null;
     @property(cc.Prefab)
     extraBlockPrefab: cc.Prefab = null;
+    @property
     private width: number = 9;
+    @property
     private height: number = 9;
     private board: BoardType[][];
     private matchFinder: MatchFinder;
@@ -47,13 +49,10 @@ export default class Board extends cc.Component {
                     const block = this.blockFactory.createBlock(y, x, getRandomBlockKey(), blockSize);
                     this.setBlock(y, x, block);
                     const startPos = new Vec3(
-                        -(this.node.width / 2 - blockSize.x) + blockSize.x * x,
+                        -(this.node.width / 2 - GridConfig.marginX - blockSize.x / 2) + blockSize.x * x,
                         GridConfig.behindScreen
                     )
-                    const targetPos = new Vec3(
-                        -(this.node.width / 2 - blockSize.x) + blockSize.x * x,
-                        (this.node.height / 2 - blockSize.y) - blockSize.y * y,
-                        0);
+                    const targetPos = this.blockSizer.getBlockPosition(y, x, blockSize)
                     block.fallAnimation(startPos, targetPos);
                 }
             }
@@ -72,11 +71,7 @@ export default class Board extends cc.Component {
                 if (newY !== y) {
                     this.board[y][x] = null;
                     this.setBlock(newY, x, block);
-                    const targetPos = new Vec3(
-                        -(this.node.width / 2 - blockSize.x) + blockSize.x * x,
-                        (this.node.height / 2 - blockSize.y) - blockSize.y * newY,
-                        0
-                    );
+                    const targetPos = this.blockSizer.getBlockPosition(newY, x, blockSize)
                     block.fallTo(targetPos, 0.4)
                 }
             }
@@ -117,10 +112,7 @@ export default class Board extends cc.Component {
             extraBlock = this.blockFactory.createExtraBlock(row, col, getRandomExtraBlockKey(['bomb_max']), blockSize);
         }
         this.setBlock(row, col, extraBlock);
-        extraBlock.node.setPosition(new Vec3(
-            -(this.node.width / 2 - blockSize.x) + blockSize.x * col,
-            (this.node.height / 2 - blockSize.y) - blockSize.y * row,
-            0))
+        extraBlock.node.setPosition(this.blockSizer.getBlockPosition(row, col, blockSize))
         const index = blocksForDestroy.findIndex(
             (block) => block.getRow() === row && block.getCol() === col
         );
@@ -137,7 +129,6 @@ export default class Board extends cc.Component {
     }
     private onResize(): void {
         if (!this.board) return;
-
         this.blockSizer.setBlockSize(this.blockSizer.calculateBlockSize());
         const blockSize = this.blockSizer.getBlockSize()
         for (let x = 0; x < this.width; x++) {
@@ -145,8 +136,8 @@ export default class Board extends cc.Component {
                 const block = this.board[y][x];
                 block?.setSize(blockSize);
                 const targetPos = new Vec3(
-                    -(this.node.width / 2 - blockSize.x) + blockSize.x * x,
-                    (this.node.height / 2 - blockSize.y) - blockSize.y * y,
+                    -(this.node.width / 2 - GridConfig.marginX - blockSize.x / 2) + blockSize.x * x,
+                    (this.node.height / 2 - GridConfig.marginX - blockSize.y / 2) - blockSize.y * y,
                     0);
                 block?.node.setPosition(targetPos);
             }
