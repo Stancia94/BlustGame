@@ -76,8 +76,6 @@ var Block = /** @class */ (function (_super) {
         var sprite = this.blockSpriteNode.getComponent(cc.Sprite);
         sprite.spriteFrame = spriteFrame;
     };
-    Block.prototype.updateScale = function () {
-    };
     Block.prototype.destroyYourself = function () {
         var _this = this;
         var anim = this.blockSpriteNode.getComponent(cc.Animation);

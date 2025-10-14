@@ -3,6 +3,8 @@ import { EventBus } from "./EventBus";
 import { GridConfig } from "./GridConfig";
 
 const { ccclass, property } = cc._decorator;
+
+
 @ccclass
 export default class Block<T extends string = BlockKey> extends cc.Component {
     @property(cc.SpriteAtlas)
@@ -50,9 +52,6 @@ export default class Block<T extends string = BlockKey> extends cc.Component {
         const spriteFrame = this.atlas.getSpriteFrame(blockColor[key]);
         const sprite = this.blockSpriteNode.getComponent(cc.Sprite);
         sprite.spriteFrame = spriteFrame;
-    }
-    protected updateScale(): void {
-
     }
     public destroyYourself(): void {
         const anim = this.blockSpriteNode.getComponent(cc.Animation);

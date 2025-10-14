@@ -27,3 +27,4 @@ export default class BoardSizer {
         return this.blockSize;
     }
 }
+

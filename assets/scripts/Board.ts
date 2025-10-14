@@ -1,12 +1,13 @@
-import { BoardType, BlockClickEvent, isBlockKey, isExtraBlockKey } from "./Types";
-import { getRandomBlockKey, getRandomExtraBlockKey } from "./Utils";
+import { BoardType, BlockClickEvent } from "./Types";
+import { getRandomBlockKey } from "./Utils";
 import { EventBus } from "./EventBus";
 import { GridConfig } from "./GridConfig";
-import MatchFinder from "./MatchFinder";
 import BlockFactory from "./BlockFactory";
-import ExtraBlockHandler from "./ExtraBlockHandler";
-import ExtraBlock from "./ExrtaBlock";
 import BoardSizer from "./BoardSizer";
+import { Handler } from "./HandlerInterface";
+import { BoardCommand } from "./Commands";
+import { BlockClickHandler } from "./BlockClickHandler";
+import ExtraBlockClickHandler from "./ExtraBlockClickHandler";
 
 const { Vec3 } = cc;
 const { ccclass, property } = cc._decorator;
@@ -20,11 +21,11 @@ export default class Board extends cc.Component {
     private width: number = 9;
     @property
     private height: number = 9;
-    private board: BoardType[][];
-    private matchFinder: MatchFinder;
-    private blockFactory: BlockFactory;
-    private extraBlockHandler: ExtraBlockHandler;
-    private blockSizer: BoardSizer;
+    public board: BoardType[][];
+    public blockFactory: BlockFactory;
+    private extraBlockHandler: Handler;
+    private blockHandler: Handler;
+    public blockSizer: BoardSizer;
     protected onLoad(): void {
         EventBus.on('block-clicked', this.onBlockClicked, this);
         EventBus.on('board-change-size', this.onResize, this);
@@ -32,16 +33,19 @@ export default class Board extends cc.Component {
 
     protected start(): void {
         this.board = new Array(this.height).fill(0).map(() => new Array(this.width).fill(null));
-        this.matchFinder = new MatchFinder(this.board);
         this.blockFactory = new BlockFactory(this.blockPrefab, this.extraBlockPrefab, this.node);
-        this.extraBlockHandler = new ExtraBlockHandler(this.board);
+
+        this.extraBlockHandler = new ExtraBlockClickHandler(this.board);
+        this.blockHandler = new BlockClickHandler(this.board);
+        this.blockHandler.setNext(this.extraBlockHandler);
+
         this.blockSizer = new BoardSizer(this.node, this.width, new cc.Vec2(GridConfig.width, GridConfig.height))
         this.scheduleOnce(() => {
             this.blockSizer.setBlockSize(this.blockSizer.calculateBlockSize());
             this.fill();
         }, 0);
     }
-    private fill(): void {
+    public fill(): void {
         const blockSize = this.blockSizer.getBlockSize()
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
@@ -58,7 +62,7 @@ export default class Board extends cc.Component {
             }
         }
     }
-    private fall(): void {
+    public fall(): void {
         const blockSize = this.blockSizer.getBlockSize()
         for (let x = 0; x < this.width; x++) {
             for (let y = this.height - 2; y >= 0; y--) {
@@ -77,53 +81,18 @@ export default class Board extends cc.Component {
             }
         }
     }
-    private destroyGroup(blocks: BoardType[]): void {
-        EventBus.emit('blocks-destroy', blocks.length);
-        blocks.forEach((block) => {
-            block.destroyYourself();
-            this.board[block.getRow()][block.getCol()] = null;
-        });
-        this.fall();
-        this.fill();
-    }
     private onBlockClicked(data: BlockClickEvent): void {
-        if (isBlockKey(data.blockType)) {
-            let sameBlocks: BoardType[] = [];
-            sameBlocks = this.matchFinder.find(data.row, data.col, data.blockType);
-            if (sameBlocks.length >= 2) {
-                EventBus.emit('step');
-                if (sameBlocks.length >= 5) {
-                    this.upgradeToExtraBlock(data.row, data.col, sameBlocks);
-                }
-                this.destroyGroup(sameBlocks);
-            }
-        } else if (isExtraBlockKey(data.blockType)) {
-            const blockForDestroy = this.extraBlockHandler.handle(data);
-            this.destroyGroup(blockForDestroy);
-        }
+        const commands: BoardCommand[] = [];
+        this.blockHandler.handle(data, commands);
+        console.log(commands)
+        commands.forEach((comand) => comand.execute(this))
     }
-    private upgradeToExtraBlock(row: number, col: number, blocksForDestroy: BoardType[]) {
-        this.deleteBlock(row, col);
-        const blockSize = this.blockSizer.getBlockSize()
-        let extraBlock: ExtraBlock = null;
-        if (blocksForDestroy.length >= 8) {
-            extraBlock = this.blockFactory.createExtraBlock(row, col, 'bomb_max', blockSize);
-        } else {
-            extraBlock = this.blockFactory.createExtraBlock(row, col, getRandomExtraBlockKey(['bomb_max']), blockSize);
-        }
-        this.setBlock(row, col, extraBlock);
-        extraBlock.node.setPosition(this.blockSizer.getBlockPosition(row, col, blockSize))
-        const index = blocksForDestroy.findIndex(
-            (block) => block.getRow() === row && block.getCol() === col
-        );
-        if (index >= 0) blocksForDestroy.splice(index, 1);
-    }
-    private deleteBlock(row: number, col: number): void {
+    public deleteBlock(row: number, col: number): void {
         const block = this.board[row][col];
         block.destroyYourself();
         this.board[row][col] = null;
     }
-    private setBlock(row: number, col: number, block: BoardType): void {
+    public setBlock(row: number, col: number, block: BoardType): void {
         block.setRowCol(row, col);
         this.board[row][col] = block;
     }

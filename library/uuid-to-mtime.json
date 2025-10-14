@@ -605,8 +605,8 @@
     "relativePath": "Start.fire"
   },
   "d23cd95d-460b-4a24-9515-9751f945c7fe": {
-    "asset": 1760090648260,
-    "meta": 1760090648266,
+    "asset": 1760483967909,
+    "meta": 1760483967915,
     "relativePath": "Game.fire"
   },
   "3b942820-1600-48c6-b7b7-6b8679bbd185": {
@@ -669,11 +669,6 @@
     "meta": 1759667817191,
     "relativePath": "scripts\\Utils.ts"
   },
-  "545210fa-038f-49cd-81c7-402e2bbda905": {
-    "asset": 1759668831114,
-    "meta": 1759668894956,
-    "relativePath": "scripts\\ExtraBlockHandler.ts"
-  },
   "820493b0-eb8b-4800-9f2f-d2b2e19a9b6b": {
     "asset": 1759959460049,
     "meta": 1759960553537,
@@ -694,16 +689,6 @@
     "meta": 1759965263302,
     "relativePath": "scripts\\LimitNodeSize.ts"
   },
-  "5759aa33-a5ff-431e-b2a0-d384dfe01d61": {
-    "asset": 1760025296034,
-    "meta": 1760034679628,
-    "relativePath": "scripts\\Block.ts"
-  },
-  "9636b84e-6957-459b-ac87-1d300085604d": {
-    "asset": 1760086948292,
-    "meta": 1760087691004,
-    "relativePath": "scripts.zip"
-  },
   "ba6ed6e6-2c14-495b-ac42-e2ce1aab8067": {
     "asset": 1760088888171,
     "meta": 1760088889272,
@@ -714,14 +699,39 @@
     "meta": 1760090611008,
     "relativePath": "scripts\\GridConfig.ts"
   },
+  "77005944-f13e-490e-91c8-06c10c94aebe": {
+    "asset": 1760091429421,
+    "meta": 1760091429559,
+    "relativePath": "scripts\\BoardSizer.ts"
+  },
+  "5759aa33-a5ff-431e-b2a0-d384dfe01d61": {
+    "asset": 1760484165824,
+    "meta": 1760484441192,
+    "relativePath": "scripts\\Block.ts"
+  },
+  "59a337c3-e222-43d4-bded-289eb2c421b8": {
+    "asset": 1760484893437,
+    "meta": 1760484895355,
+    "relativePath": "scripts\\Commands.ts"
+  },
+  "a41a5ffc-a66d-44ed-94db-5e4c5e7f0c1a": {
+    "asset": 1760485092917,
+    "meta": 1760485190047,
+    "relativePath": "scripts\\BlockClickHandler.ts"
+  },
+  "6bb38f5a-0b3c-4c4b-9673-ff785660c3e9": {
+    "asset": 1760485132154,
+    "meta": 1760485182668,
+    "relativePath": "scripts\\HandlerInterface.ts"
+  },
   "63747414-9276-41de-a274-4615327cb470": {
-    "asset": 1760091060811,
-    "meta": 1760091061056,
+    "asset": 1760485367187,
+    "meta": 1760485498023,
     "relativePath": "scripts\\Board.ts"
   },
-  "77005944-f13e-490e-91c8-06c10c94aebe": {
-    "asset": 1760091056921,
-    "meta": 1760091061076,
-    "relativePath": "scripts\\BoardSizer.ts"
+  "545210fa-038f-49cd-81c7-402e2bbda905": {
+    "asset": 1760485247038,
+    "meta": 1760485498052,
+    "relativePath": "scripts\\ExtraBlockClickHandler.ts"
   }
 }

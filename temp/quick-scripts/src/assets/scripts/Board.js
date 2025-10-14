@@ -23,14 +23,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var Types_1 = require("./Types");
 var Utils_1 = require("./Utils");
 var EventBus_1 = require("./EventBus");
 var GridConfig_1 = require("./GridConfig");
-var MatchFinder_1 = require("./MatchFinder");
 var BlockFactory_1 = require("./BlockFactory");
-var ExtraBlockHandler_1 = require("./ExtraBlockHandler");
 var BoardSizer_1 = require("./BoardSizer");
+var BlockClickHandler_1 = require("./BlockClickHandler");
+var ExtraBlockClickHandler_1 = require("./ExtraBlockClickHandler");
 var Vec3 = cc.Vec3;
 var _a = cc._decorator, ccclass = _a.ccclass, property = _a.property;
 var Board = /** @class */ (function (_super) {
@@ -50,9 +49,10 @@ var Board = /** @class */ (function (_super) {
     Board.prototype.start = function () {
         var _this = this;
         this.board = new Array(this.height).fill(0).map(function () { return new Array(_this.width).fill(null); });
-        this.matchFinder = new MatchFinder_1.default(this.board);
         this.blockFactory = new BlockFactory_1.default(this.blockPrefab, this.extraBlockPrefab, this.node);
-        this.extraBlockHandler = new ExtraBlockHandler_1.default(this.board);
+        this.extraBlockHandler = new ExtraBlockClickHandler_1.default(this.board);
+        this.blockHandler = new BlockClickHandler_1.BlockClickHandler(this.board);
+        this.blockHandler.setNext(this.extraBlockHandler);
         this.blockSizer = new BoardSizer_1.default(this.node, this.width, new cc.Vec2(GridConfig_1.GridConfig.width, GridConfig_1.GridConfig.height));
         this.scheduleOnce(function () {
             _this.blockSizer.setBlockSize(_this.blockSizer.calculateBlockSize());
@@ -93,48 +93,12 @@ var Board = /** @class */ (function (_super) {
             }
         }
     };
-    Board.prototype.destroyGroup = function (blocks) {
-        var _this = this;
-        EventBus_1.EventBus.emit('blocks-destroy', blocks.length);
-        blocks.forEach(function (block) {
-            block.destroyYourself();
-            _this.board[block.getRow()][block.getCol()] = null;
-        });
-        this.fall();
-        this.fill();
-    };
     Board.prototype.onBlockClicked = function (data) {
-        if (Types_1.isBlockKey(data.blockType)) {
-            var sameBlocks = [];
-            sameBlocks = this.matchFinder.find(data.row, data.col, data.blockType);
-            if (sameBlocks.length >= 2) {
-                EventBus_1.EventBus.emit('step');
-                if (sameBlocks.length >= 5) {
-                    this.upgradeToExtraBlock(data.row, data.col, sameBlocks);
-                }
-                this.destroyGroup(sameBlocks);
-            }
-        }
-        else if (Types_1.isExtraBlockKey(data.blockType)) {
-            var blockForDestroy = this.extraBlockHandler.handle(data);
-            this.destroyGroup(blockForDestroy);
-        }
-    };
-    Board.prototype.upgradeToExtraBlock = function (row, col, blocksForDestroy) {
-        this.deleteBlock(row, col);
-        var blockSize = this.blockSizer.getBlockSize();
-        var extraBlock = null;
-        if (blocksForDestroy.length >= 8) {
-            extraBlock = this.blockFactory.createExtraBlock(row, col, 'bomb_max', blockSize);
-        }
-        else {
-            extraBlock = this.blockFactory.createExtraBlock(row, col, Utils_1.getRandomExtraBlockKey(['bomb_max']), blockSize);
-        }
-        this.setBlock(row, col, extraBlock);
-        extraBlock.node.setPosition(this.blockSizer.getBlockPosition(row, col, blockSize));
-        var index = blocksForDestroy.findIndex(function (block) { return block.getRow() === row && block.getCol() === col; });
-        if (index >= 0)
-            blocksForDestroy.splice(index, 1);
+        var _this = this;
+        var commands = [];
+        this.blockHandler.handle(data, commands);
+        console.log(commands);
+        commands.forEach(function (comand) { return comand.execute(_this); });
     };
     Board.prototype.deleteBlock = function (row, col) {
         var block = this.board[row][col];
