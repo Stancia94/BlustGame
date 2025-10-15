@@ -39,8 +39,6 @@ var DestroyGroup = /** @class */ (function (_super) {
             board.board[block.getRow()][block.getCol()] = null;
             block.destroyYourself();
         });
-        board.fall();
-        board.fill();
     };
     return DestroyGroup;
 }(BaseCommand));

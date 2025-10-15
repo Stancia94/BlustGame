@@ -22,8 +22,6 @@ export class DestroyGroup extends BaseCommand {
             board.board[block.getRow()][block.getCol()] = null;
             block.destroyYourself();
         });
-        board.fall();
-        board.fill();
     }
 }
 export class UpgradeToExtraBlock extends BaseCommand {

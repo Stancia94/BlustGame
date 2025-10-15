@@ -26,25 +26,42 @@ var ExtraBlockClickHandler = /** @class */ (function (_super) {
         return _super.call(this, board) || this;
     }
     ExtraBlockClickHandler.prototype.handle = function (data, commands) {
-        if (Types_1.isExtraBlockKey(data.blockType)) {
+        if (!Types_1.isExtraBlockKey(data.blockType))
+            return _super.prototype.handle.call(this, data, commands);
+        var toProcess = [data];
+        var processed = new Set();
+        while (toProcess.length > 0) {
+            var current = toProcess.pop();
+            var key = current.row + "_" + current.col;
+            if (processed.has(key))
+                continue;
+            processed.add(key);
             var groupForDestroy = [];
-            switch (data.blockType) {
+            switch (current.blockType) {
                 case 'rockets_horizontal':
-                    groupForDestroy = this.getHorizontalLine(data.row);
+                    groupForDestroy = this.getHorizontalLine(current.row);
                     break;
                 case 'bomb':
-                    groupForDestroy = this.getBombArea(data.row, data.col);
+                    groupForDestroy = this.getBombArea(current.row, current.col);
                     break;
                 case 'rockets_vertical':
-                    groupForDestroy = this.getVerticalLine(data.col);
+                    groupForDestroy = this.getVerticalLine(current.col);
                     break;
                 case 'bomb_max':
                     groupForDestroy = this.getAllBlocks();
                     break;
-                default:
-                    return [];
             }
             if (groupForDestroy.length > 0) {
+                groupForDestroy.forEach(function (block) {
+                    if (Types_1.isExtraBlockKey(block.getType())) {
+                        var next = {
+                            blockType: block.getType(),
+                            row: block.getRow(),
+                            col: block.getCol(),
+                        };
+                        toProcess.push(next);
+                    }
+                });
                 commands.push(new Commands_1.DestroyGroup(groupForDestroy));
             }
         }

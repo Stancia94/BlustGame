@@ -55,7 +55,6 @@ var LimitNodeSize = /** @class */ (function (_super) {
             node.height = this.maxWidth * aspectRatio;
         }
         EventBus_1.EventBus.emit('board-change-size');
-        console.log(node.width);
     };
     LimitNodeSize.prototype.onResize = function () {
         this.adjustSize();

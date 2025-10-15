@@ -31,7 +31,6 @@ export default class LimitNodeSize extends cc.Component {
             node.height = this.maxWidth * aspectRatio;
         }
         EventBus.emit('board-change-size')
-        console.log(node.width)
     }
     protected onResize(): void {
         this.adjustSize();

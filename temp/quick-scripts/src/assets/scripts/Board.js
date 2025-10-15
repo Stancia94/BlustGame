@@ -97,8 +97,9 @@ var Board = /** @class */ (function (_super) {
         var _this = this;
         var commands = [];
         this.blockHandler.handle(data, commands);
-        console.log(commands);
         commands.forEach(function (comand) { return comand.execute(_this); });
+        this.fall();
+        this.fill();
     };
     Board.prototype.deleteBlock = function (row, col) {
         var block = this.board[row][col];

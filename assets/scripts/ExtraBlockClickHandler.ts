@@ -7,30 +7,49 @@ export default class ExtraBlockClickHandler extends ClickHandler {
         super(board);
     }
     public handle(data: BlockClickEvent, commands: BoardCommand[]): BoardCommand[] {
-        if (isExtraBlockKey(data.blockType)) {
+        if (!isExtraBlockKey(data.blockType)) return super.handle(data, commands);
+
+        const toProcess: BlockClickEvent[] = [data];
+        const processed: Set<string> = new Set();
+
+        while (toProcess.length > 0) {
+            const current = toProcess.pop()!;
+            const key = `${current.row}_${current.col}`;
+            if (processed.has(key)) continue;
+            processed.add(key);
             let groupForDestroy: BoardType[] = [];
-            switch (data.blockType) {
+            switch (current.blockType) {
                 case 'rockets_horizontal':
-                    groupForDestroy = this.getHorizontalLine(data.row);
+                    groupForDestroy = this.getHorizontalLine(current.row);
                     break;
                 case 'bomb':
-                    groupForDestroy = this.getBombArea(data.row, data.col);
+                    groupForDestroy = this.getBombArea(current.row, current.col);
                     break;
                 case 'rockets_vertical':
-                    groupForDestroy = this.getVerticalLine(data.col);
+                    groupForDestroy = this.getVerticalLine(current.col);
                     break;
                 case 'bomb_max':
                     groupForDestroy = this.getAllBlocks();
                     break;
-                default:
-                    return [];
             }
             if (groupForDestroy.length > 0) {
+                groupForDestroy.forEach(block => {
+                    if (isExtraBlockKey(block.getType())) {
+                        const next: BlockClickEvent = {
+                            blockType: block.getType(),
+                            row: block.getRow(),
+                            col: block.getCol(),
+                        };
+                        toProcess.push(next);
+                    }
+                });
                 commands.push(new DestroyGroup(groupForDestroy));
             }
         }
+
         return super.handle(data, commands);
     }
+
     private getHorizontalLine(row: number): BoardType[] {
         return (this.board[row]);
     }

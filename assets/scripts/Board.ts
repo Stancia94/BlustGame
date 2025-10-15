@@ -84,8 +84,9 @@ export default class Board extends cc.Component {
     private onBlockClicked(data: BlockClickEvent): void {
         const commands: BoardCommand[] = [];
         this.blockHandler.handle(data, commands);
-        console.log(commands)
         commands.forEach((comand) => comand.execute(this))
+        this.fall();
+        this.fill();
     }
     public deleteBlock(row: number, col: number): void {
         const block = this.board[row][col];
